@@ -183,3 +183,7 @@ button {
 .hidden {
   visibility: hidden;
 }
+
+.cardmapclass {
+  height: 200px;
+}

@@ -62,6 +62,13 @@ function createCards(list) {
       .on('click', openCardEditModal);
 
     $cardLi.append($cardButton);
+    let $cardmap = $('<div>')
+      .attr('id', 'map' + card.id)
+      .addClass('cardmapclass')
+      .data('lng', 30)
+      .data('lat', 30);
+    $cardLi.append($cardmap);
+
 
     return $cardLi;
   });
@@ -69,6 +76,20 @@ function createCards(list) {
   $cardUl.append($cardLis);
 
   return $cardUl;
+}
+
+function renderMaps(lists) {
+  var children = $('.cardmapclass');  
+  for(child in children){     
+        map = new google.maps.Map(document.getElementById(children[child].id), {
+          center: {lat: parseFloat($(children[child]).data('lat')), lng: parseFloat($(children[child]).data('lng'))},
+          zoom: 8
+        }); 
+      }
+}
+
+function initMap() {
+
 }
 
 function createLists(lists) {
@@ -114,6 +135,7 @@ function renderBoard() {
 
   makeSortable();
   renderContributors();
+  renderMaps($lists);
 }
 
 function renderContributors() {
