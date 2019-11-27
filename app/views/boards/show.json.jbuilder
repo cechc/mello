@@ -10,6 +10,8 @@ json.lists @board.lists do |list|
     json.id card.id
     json.text card.text
     json.position card.position
+    json.lat card.lat
+    json.lng card.lng
   end
 end
 

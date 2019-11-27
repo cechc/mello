@@ -16,6 +16,13 @@ const $contributorModalInput = $('#contributor-email');
 const $contributorModalSaveButton = $('#contribute .save');
 const $contributorModalList = $('#contributors-content ul');
 
+var lat
+var lng
+navigator.geolocation.getCurrentPosition(function (d){
+  lat=d.coords.latitude
+  lng=d.coords.longitude
+})
+
 let board;
 
 init();
@@ -56,6 +63,7 @@ function createCards(list) {
 
   let $cardLis = list.cards.map(function(card) {
     let $cardLi = $('<li>');
+    let $cardspan = $('<span>').text("Card Creator's Location")
     let $cardButton = $('<button>')
       .text(card.text)
       .data({ ...card, list_id: list.id })
@@ -65,9 +73,12 @@ function createCards(list) {
     let $cardmap = $('<div>')
       .attr('id', 'map' + card.id)
       .addClass('cardmapclass')
-      .data('lng', 30)
-      .data('lat', 30);
-    $cardLi.append($cardmap);
+      .data('lng', card.lng)
+      .data('lat', card.lat);
+      if (card.lng != undefined){
+        $cardLi.append($cardspan)
+        $cardLi.append($cardmap);
+      }
 
 
     return $cardLi;
@@ -272,7 +283,9 @@ function handleCardCreate(event) {
     method: 'POST',
     data: {
       list_id: listId,
-      text: cardText
+      text: cardText,
+      lat: lat,
+      lng: lng
     }
   }).then(function() {
     init();

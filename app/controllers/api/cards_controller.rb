@@ -66,7 +66,7 @@ module Api
     private
 
     def card_params
-      params.permit(:id, :text, :list_id)
+      params.permit(:id, :text, :list_id, :lat, :lng)
     end
   end
 end
